@@ -1,0 +1,634 @@
+<html>
+    <head>
+        <title>
+    SymPy Gamma
+    </title>
+
+ <style>
+            li
+            {
+              padding:5px;
+            }
+            .form-control
+            {
+              padding:2px;
+            }
+            .error
+            {
+              color:red;
+            }
+            
+            
+            
+            
+              .navbar
+            {
+            display:flex;
+            padding:16px;
+            font-family:sans-serif;
+            color:blue;
+            }
+            .navbar__link-brand
+            {
+            flex:1;
+           
+            align-items:center;
+            font-size:25px;
+            text-decoration:none;
+            color:white;
+            font-weight:bold;
+            
+            }
+            .navbar__items
+              flex:3;
+             display:flex;
+             align-items:center;
+             font-size:1.5rem;
+             cursor:pointer;
+            }
+            .navbar__link
+            {
+              flex:1;
+              display:grid;
+              place-items:center;
+              padding:8px;
+            }
+            
+            
+            
+            
+            
+            
+            
+            </style>
+
+
+
+
+
+
+
+
+
+
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+
+
+
+</head>
+<body>
+
+	 <div  class="navbar" style='background-color:black'>
+           <div class="navbar__link-brand">MADEASY</div>
+      
+                 
+          <div class="navbar__link-brand"><a   href="/#/home">Home</a></div>
+      
+              </div>
+      
+          </div>
+        </div>
+      
+        
+
+
+	<div class="jumbotron">
+		
+
+		<div class="container">
+			<div class="alert alert-info text-align">
+				<h3> Instructions for using our site</h3>
+
+				<h5> please read carefully and enjoy our services</h5>
+
+
+			
+			<div class="col-lg-8">
+				<div class="thumbnail">
+			<ul>
+				<li>please wait after clicking submit multiple clicks prevent loading</li>
+				<li> In that case U may need to refresh page and enter again</li>
+
+				<li>Make sure that Your function is variable in q</li>
+
+				<li>U should not enter plus in your equation rather than u should enter in the following way</li>
+
+				<li>for example q**3+10q+6 should be entered as q**3-(10q)-(-6) </li>
+
+			    <li>U can any equation but interms of q</li>
+
+
+
+			</ul>
+		</div>
+		</div>
+  </div>
+
+
+
+	</div>
+      <div class="container">
+         <div class="row">
+
+         <div class="col-lg-4">
+
+                 <label for="id_equation">equation:</label><input type="text" class='form-control' name="equation" required="" id="id_equation">
+
+
+
+         </div>
+         <div class="col-lg-4">
+
+                 <label for="id_profit">profit:</label><input type="number" class='form-control' name="pagesize" required="" id="id_profit">
+
+         </div>
+
+        <div class="col-lg-4">
+
+                 <label for="submit">submit:</label>  <input type="submit" class="btn form-control" type="submit" id="submit">
+
+
+
+         </div>
+
+
+
+
+
+       </div>
+
+
+
+
+
+
+      </div>
+
+      <div class="container">
+
+
+      <div class="alert alert-secondary" id="hello">
+        we will solve for u
+  
+
+      </div>
+    </div>
+    <div class="container">
+
+
+  
+ <div class="alert alert-secondary" id="hello2">
+  we will solve for u
+      </div>
+
+    </div>
+          <div class="container">
+
+
+
+      <div class="alert alert-secondary" id="maxima-minima">
+        we will solve for u
+      </div>
+    </div>
+          <div class="container">
+
+
+
+
+       <div class="alert alert-secondary" id="elastcity">
+        we will solve for u
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+  </div>
+
+
+
+
+   
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+function mathjax_script() {
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_CHTML-full"
+        
+
+  var config = 'MathJax.Hub.Config({ config: "MathJax.js" }); ' +
+               'MathJax.Hub.Startup.onload();';
+
+  if (window.opera) {script.innerHTML = config}
+               else {script.text = config}
+
+  document.getElementsByTagName("head")[0].appendChild(script);
+}
+
+
+
+
+
+$('#submit').on('click',function(){
+  
+        equation=$('#id_equation').val()
+        profit=$('#id_profit').val()
+        build_query='?exp=diff('+ equation + ')'
+
+
+        
+        if (equation==='')
+        {
+        	alert('enter the equation')
+          return
+
+        }
+        
+
+        $.get("http://ravigitte.pythonanywhere.com/solve/"+build_query, function(data, status){
+       
+        a=''
+        for(i=0;i<4;i++)
+        {
+            a+=data[i]['output'];
+     
+                    
+
+        }
+        console.log(a)
+
+
+
+     $('#hello').html(a)
+     mathjax_script()
+
+     script=$('p').last().html()
+     value=$(script).text()
+     temp=value
+     pass=''
+     flag=0
+  
+     for(i=0;i<value.length;i++)
+     {
+        if ((value[i]==='{') || (value[i]==='}'))
+        {
+
+          continue;
+        }
+
+        else if(value[i]===' ')
+        {
+
+          continue;
+       }
+
+        else if(value[i]==='+')
+         {
+            pass+='--'
+            flag=1
+
+        }
+        else
+        {
+          pass+=value[i]
+         
+
+          
+    
+        }
+
+
+    }
+
+    pass1=pass.replace(/\(/g, "*(")
+
+    build_query='?exp=diff('+ pass1 + ')'
+
+    console.log(build_query)
+
+
+
+
+    $.get("http://ravigitte.pythonanywhere.com/solve/"+build_query, function(data, status){
+
+   k=''
+        for(i=0;i<4;i++)
+        {
+            k+=data[i]['output'];
+     
+                    
+
+        }
+
+
+
+     $('#maxima-minima').html(k)
+
+     mathjax_script()
+
+     console.log(k)
+
+
+
+
+
+
+     build_query='?exp=solve('+pass1 +( -profit) + ')'
+
+     $.get("http://ravigitte.pythonanywhere.com/solve/"+build_query, function(data, status){
+   
+
+      b=''
+        for(i=0;i<2;i++)
+        {
+            b+=data[i]['output'] 
+
+        }
+
+$('#hello2').html(b)
+mathjax_script()
+
+root1=$('#hello2 li script').last().text()
+root2=$('#hello2 li script').first().text()
+
+
+if ((root1.indexOf('frac')>=0) && (root2.indexOf('frac')>=0))
+{
+  root2=$('#hello2 li script').first().attr('data-output-repr')
+  root1=$('#hello2 li script').last().attr('data-output-repr')
+
+
+}
+else if (root2.indexOf('frac')>=0)
+{
+    root2=$('#hello2 li script').first().attr('data-output-repr')
+
+
+}
+
+else if(root1.indexOf('frac')>=0)
+{
+    root1=$('#hello2 li script').last().attr('data-output-repr')
+
+
+}
+else
+{
+  root1=$('#hello2 li script').last().text()
+root2=$('#hello2 li script').first().text()
+
+
+  
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+script2=$('k').last().html()
+     value2=$(script2).text()
+
+
+
+a=equation.replace(/\s/g, "").replace(/\^/g,'**');
+b=temp.replace(/\s/g, "").replace(/\^/g,'**').replace(/\{/g,'').replace(/\}/g,'');
+min_max=value2.replace(/\s/g, "").replace(/\^/g,'**');
+
+
+
+
+
+
+
+
+
+
+function put_value(string,profit)
+{
+
+    x=''
+	for(var i=0;i<string.length;i++)
+
+
+
+	{
+
+		if (string[i]=='q')
+
+		{
+			if ((i===0) || (string[i] in ['*','+','-']))
+			{
+				x+=profit
+		
+
+			}
+			else
+			{
+               x+='*'+profit
+              
+			}
+
+		}
+		else
+		{
+			x+=string[i]
+
+		}
+	}
+
+
+
+	return x
+
+
+
+
+}
+
+
+
+function find_min_max(min_max,root1,root2)
+{
+
+  temp1=put_value(min_max,root1)
+  temp2=put_value(min_max,root2)
+
+  if (((eval(root1)>eval(root2)) && (temp1 > temp2)) || ((eval(root2)>eval(root1)) && (temp2 > temp1)))
+  {
+
+
+    return (Math.max(eval(root1),eval(root2)))
+  }
+
+  else{
+
+    return  (Math.min(eval(root1),eval(root2)))
+  }
+
+
+
+
+
+}
+q=find_min_max(min_max,root1,root2);
+
+
+
+
+
+
+
+
+console.log(a,b)
+
+c=eval(put_value(a,q))
+
+dq=eval(put_value(b,q))
+
+
+
+e=c/(q*dq)
+
+
+
+x="<div class='alert alert-secondary'>"
+
+x+=`<li>The value dq/dC is ${script}</li> </br>` 
+
+x+=`<li>The value q is <h3>${q}</h3> </br></li>` 
+
+
+x+=`<li>The equation <h3>${equation}</h3></li>`
+
+x+=`<li>The elasticty is (dq/dc)*C/q <h3>${e}</h3></li>`
+
+
+
+
+
+$('#elastcity').html(x)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
+
+
+});
+});
+
+});
+        
+
+ 
+</script>
+
+       
+
+
+
+
+
+
+
+
+        
